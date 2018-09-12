@@ -1,29 +1,78 @@
+// Function that builds the metadata panel
 function buildMetadata(sample) {
-
-  // @TODO: Complete the following function that builds the metadata panel
-
+  console.log(sample);
   // Use `d3.json` to fetch the metadata for a sample
-    // Use d3 to select the panel with id of `#sample-metadata`
+  d3.json(`/metadata/${sample}`).then(function(response) {
 
-    // Use `.html("") to clear any existing metadata
+    console.log(response);
+    
+    //   Use d3 to select the panel with id of `#sample-metadata`
+    var meta_data = d3.select("#sample-metadata");
+    
+    //   Use `.html("") to clear any existing metadata
+    meta_data.html("");
 
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
+    //   Use `Object.entries` to add each key and value pair to the panel
+    Object.entries(response).forEach(([key, value]) => {
+      var listItem = meta_data.append("li");
+      listItem.text(`${key}: ${value}`);
+    });
+  });
 }
+
 
 function buildCharts(sample) {
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
+  // Use `d3.json` to fetch the sample data for the plots
+  d3.json(`/samples/${sample}`).then(function(response) {
+    console.log(response);
+    // Build a Bubble Chart using the sample data
+    // Create Trace 
+    var bubbleTrace = {
+      x: response.otu_ids,
+      y: response.sample_values,
+      mode: "markers",
+      marker: {
+        size: response.sample_values,
+        color: response.otu_ids,
+      },
 
-    // @TODO: Build a Bubble Chart using the sample data
+      text: response.otu_labels,
 
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
+    };
+    var bubbleData = [bubbleTrace];
+    var bubbleLayout = {
+      // title: "<b>Sample Sizes</b>",
+      showlegend: false,
+      autosize: true,
+      xaxis: {
+        title: 'OTU ID'
+        }
+    };
+
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout, {
+      scrollZoom: true
+    });
+
+    // Build a Pie Chart
+    // Slice "top ten"
+  
+    var pieData = [{
+      values: response.sample_values.slice(0,10),
+      labels: response.otu_ids.slice(0,10),
+      hovertext: response.otu_labels.slice(0,10),
+      hoverinfo: "hovertext",
+      type: 'pie'
+    }];
+    
+    var pieLayout = {
+      height: 400,
+      width: 500
+    };
+    
+    Plotly.newPlot('pie', pieData, pieLayout);
+  });
+
 }
 
 function init() {
