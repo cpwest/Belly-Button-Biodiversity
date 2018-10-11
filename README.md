@@ -2,33 +2,28 @@
 
 ![Bacteria by filterforge.com](Images/bacteria_by_filterforgedotcom.jpg)
 
-In this assignment, you will build an interactive dashboard to explore the [Belly Button Biodiversity DataSet](http://robdunnlab.com/projects/belly-button-biodiversity/).
+The goal of this app was to build an interactive dashboard to explore the [Belly Button Biodiversity DataSet](http://robdunnlab.com/projects/belly-button-biodiversity/).
 
-## Step 1 - Plotly.js
+A Flask app deployed with Heroku. Can be viewed at https://belly-biodiversity-app.herokuapp.com/. 
 
-Use Plotly.js to build interactive charts for your dashboard.
+## Plotly.js
 
-* Create a PIE chart that uses data from your samples route (`/samples/<sample>`) to display the top 10 samples.
+Plotly.js was used to build the interactive charts for the dashboard.
 
-  * Use `sample_values` as the values for the PIE chart
+* Everytime a sample is selected from the drop down the Sample Metadata, PIE Chart, and Bubble Chart are all repopulated with the information pertaining to that specific sample.
 
-  * Use `otu_ids` as the labels for the pie chart
+  ![Drop Down](Images/dropdown.png)
 
-  * Use `otu_labels` as the hovertext for the chart
+
+* The Metadata gives information specific to the selected sample.
+
+  ![Metadata](Images/metadata.png)
+
+* The Pie Chart was created to display the top 10 microbial species in OTU's (technically operational taxonomic units) for the selected sample. Each wedge is labeled with the unique ID with hovertext displaying the value and labels. 
 
   ![PIE Chart](Images/pie_chart.png)
 
-* Create a Bubble Chart that uses data from your samples route (`/samples/<sample>`) to display each sample.
-
-  * Use `otu_ids` for the x values
-
-  * Use `sample_values` for the y values
-
-  * Use `sample_values` for the marker size
-
-  * Use `otu_ids` for the marker colors
-
-  * Use `otu_labels` for the text values
+* The Bubble Chart the different microbial species in OTU's for the selected sample. The x axis corresponds to the ID for the microbial species present and the y axis to the OTU value for the species. The bubble size corresponds to the OTU, color corresponds to the ID, and hovertext displays the labels. 
 
   ![Bubble Chart](Images/bubble_chart.png)
 
@@ -42,49 +37,3 @@ Use Plotly.js to build interactive charts for your dashboard.
 
 ![Example Dashboard Page](Images/dashboard_part1.png)
 ![Example Dashboard Page](Images/dashboard_part2.png)
-
-## Step 2 - Heroku
-
-Deploy your Flask app to Heroku.
-
-* You can use the provided sqlite file for the database.
-
-* Ask your Instructor and TAs for help!
-
-- - -
-
-## Advanced Challenge Assignment (Optional)
-
-The following task is completely optional and is very advanced.
-
-* Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the Weekly Washing Frequency obtained from the route `/wfreq/<sample>`
-
-* You will need to modify the example gauge code to account for values ranging from 0 - 9.
-
-* Update the chart whenever a new sample is selected
-
-![Weekly Washing Frequency Gauge](Images/gauge.png)
-
-- - -
-
-## Flask API
-
-Use Flask API starter code to serve the data needed for your plots.
-
-* Test your routes by visiting each one in the browser.
-
-- - -
-
-## Hints
-
-* Don't forget to `pip install -r requirements.txt` before you start your server.
-
-* Use `console.log` inside of your JavaScript code to see what your data looks like at each step.
-
-* Refer to the [Plotly.js Documentation](https://plot.ly/javascript/) when building the plots.
-
-- - -
-
-### Copyright
-
-Data Boot Camp © 2018. All Rights Reserved.
